@@ -42,3 +42,18 @@ C:\Users\Aluno Noite\Desktop\C#\Curso-C-\obj\Debug\net8.0\refint\Curso CSharp.dl
 C:\Users\Aluno Noite\Desktop\C#\Curso-C-\obj\Debug\net8.0\Curso CSharp.pdb
 C:\Users\Aluno Noite\Desktop\C#\Curso-C-\obj\Debug\net8.0\Curso CSharp.genruntimeconfig.cache
 C:\Users\Aluno Noite\Desktop\C#\Curso-C-\obj\Debug\net8.0\ref\Curso CSharp.dll
+C:\Visual2022-Bruno\bin\Debug\net8.0\Curso CSharp.exe
+C:\Visual2022-Bruno\bin\Debug\net8.0\Curso CSharp.deps.json
+C:\Visual2022-Bruno\bin\Debug\net8.0\Curso CSharp.runtimeconfig.json
+C:\Visual2022-Bruno\bin\Debug\net8.0\Curso CSharp.dll
+C:\Visual2022-Bruno\bin\Debug\net8.0\Curso CSharp.pdb
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.AssemblyInfoInputs.cache
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.AssemblyInfo.cs
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.csproj.CoreCompileInputs.cache
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.sourcelink.json
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.dll
+C:\Visual2022-Bruno\obj\Debug\net8.0\refint\Curso CSharp.dll
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.pdb
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.genruntimeconfig.cache
+C:\Visual2022-Bruno\obj\Debug\net8.0\ref\Curso CSharp.dll

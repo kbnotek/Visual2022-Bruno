@@ -1,40 +1,36 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Net;
-using System.Numerics;
-using System.Runtime.Intrinsics.X86;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Curso_C_.Paradigmas;
+using System;
+
 namespace Curso_C_
 {
-    // o Exercício: Declare uma variável var
-    //  para um tipo complexo, como um Dictionary ou uma 
-    //  instância de uma classe personalizada.Mostre como a 
-    //  inferência de tipo funciona com tipos mais complexos.
-    public class Marcos 
+    public class PessoaNova
     {
-        public void Marquinhos() 
+        public string Nome { get; set; }
+        public int Idade { get; set; }
+        public string Cidade { get; set; }
+        public decimal Salario { get; set; }
+    }
+
+    public class Exercicio 
+    {
+        public void ExibirResultado() 
         {
-            var mk = new pessoaMarcos
+            var pessoas = new List<PessoaNova>
             {
-                Nome = "Marcos",
-                Idade = 15
-
+                new PessoaNova { Nome = "Alice", Idade = 30, Cidade = "São Paulo", Salario = 1.800M },
+                new PessoaNova { Nome = "Bob", Idade = 25, Cidade = "Rio de Janeiro", Salario = 2.800M },
+                new PessoaNova { Nome = "Charlie", Idade = 35, Cidade = "São Paulo", Salario = 3.800M },
+                new PessoaNova { Nome = "Diana", Idade = 40, Cidade = "Belo Horizonte", Salario = 4.800M},
+                new PessoaNova { Nome = "Eve", Idade = 28, Cidade = "São Paulo" , Salario = 5.800M}
             };
-            Console.WriteLine($"O nome e: {mk.Nome} A idade e: {mk.Idade}");
+
+            var quantidadePessoasAcimaDe30 = pessoas.Count(p => p.Idade > 30);
+
+            Console.WriteLine($"Quantidade de pessoas com mais de 30 anos: {quantidadePessoasAcimaDe30}");
+
+
         }
-           
     }
 
-    public class pessoaMarcos
-    {
-        public string Nome;
-        public int Idade;
-
-    }
 }
+
