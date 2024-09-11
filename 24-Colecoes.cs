@@ -47,7 +47,7 @@ namespace Curso_C_
             // Removendo e acessando elementos na ordem em que foram adicionados
             Console.WriteLine($"Primeiro da fila: {fila.Dequeue()}");
             Console.WriteLine($"Segundo da fila: {fila.Dequeue()}");
-            Console.WriteLine($"Terceiro da fila: {fila.Dequeue()}");
+         
             // Verificando o próximo item na fila sem removê-lo
             Console.WriteLine($"Próximo na fila: {fila.Peek()}");
         }

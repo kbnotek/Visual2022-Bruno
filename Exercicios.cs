@@ -1,36 +1,111 @@
 ﻿using Curso_C_.Paradigmas;
 using System;
+using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
 namespace Curso_C_
 {
-    public class PessoaNova
-    {
-        public string Nome { get; set; }
-        public int Idade { get; set; }
-        public string Cidade { get; set; }
-        public decimal Salario { get; set; }
-    }
 
-    public class Exercicio 
+    public class Pessoa1
     {
-        public void ExibirResultado() 
+        public string Nome;
+        public int Idade;
+
+        public Pessoa1(string nome, int idade)
         {
-            var pessoas = new List<PessoaNova>
-            {
-                new PessoaNova { Nome = "Alice", Idade = 30, Cidade = "São Paulo", Salario = 1.800M },
-                new PessoaNova { Nome = "Bob", Idade = 25, Cidade = "Rio de Janeiro", Salario = 2.800M },
-                new PessoaNova { Nome = "Charlie", Idade = 35, Cidade = "São Paulo", Salario = 3.800M },
-                new PessoaNova { Nome = "Diana", Idade = 40, Cidade = "Belo Horizonte", Salario = 4.800M},
-                new PessoaNova { Nome = "Eve", Idade = 28, Cidade = "São Paulo" , Salario = 5.800M}
-            };
-
-            var quantidadePessoasAcimaDe30 = pessoas.Count(p => p.Idade > 30);
-
-            Console.WriteLine($"Quantidade de pessoas com mais de 30 anos: {quantidadePessoasAcimaDe30}");
-
-
+            this.Nome = nome;
+            this.Idade = idade;
+        }
+        public void Falar()
+        {
+            Console.WriteLine($" Olá, meu nome é {Nome} e eu tenho {Idade} anos.");
         }
     }
 
+    public class Calculadora2024
+    {
+        public int A;
+        public int B;
+        public int Soma;
+
+        public Calculadora2024()
+        {
+
+            Soma = A + B;
+        }
+
+        public void Somar()
+        {
+            Console.WriteLine($"A Soma de a {A} + {B} o RESULTADO é {Soma}");
+        }
+        public void Subtrair()
+        {
+            Console.WriteLine($"A Subtração de a {A} - {B} o RESULTADO é {A - B}");
+        }
+    }
+    public class Carro
+    {
+        public string Modelo { get; set; }
+        public int Ano { get; set; }
+        public decimal Preco { get; set; }
+
+        private void ExibirInfo()
+        {
+            Console.WriteLine($"Modelo: {Modelo}");
+            Console.WriteLine($"Ano: {Ano}");
+            Console.WriteLine($"Preço: {Preco:C}");
+        }
+
+        public void MostrarInfo()
+        {
+            ExibirInfo();
+        }
+    }
+    public class Aluno
+    {
+        public string Nome;
+        public int Matricula;
+        public string Genero;
+        public long Telefone;
+        public string Cidade;
+
+        public Aluno(string nome, int matricula)
+        {
+            Nome = nome;
+            Matricula = matricula;
+        }
+
+        public Aluno(string nome, int matricula, string genero, long telefone, string cidade)
+        {
+            Nome = nome;
+            Matricula = matricula;
+            Genero = genero;
+            Telefone = telefone;
+            Cidade = cidade;
+        }
+        public string ExibirNomeMat(string nome, int matricula)
+        {
+            return $"Nome do Aluno{Nome} Matricula: {Matricula}";
+
+
+        }
+
+        public string ExibirTdInforma()
+        {
+            return $"Aluno: {Nome}\n" +
+                $"Matricula:{Matricula} \n" +
+                $"Genero: {Genero}\n" +
+                $"Contato: {Telefone}\n" +
+                $"Cidade: {Cidade}";
+        }
+
+    }
+
 }
+
+
+
+
+
+
 
