@@ -1,0 +1,32 @@
+[
+  {
+    "Show": {
+      "Nome": "Show de Rock",
+      "DataHora": "2024-10-01T20:00:00"
+    },
+    "Pessoa": {
+      "Nome": "João Silva",
+      "Cpf": "123.456.789-00"
+    }
+  },
+  {
+    "Show": {
+      "Nome": "Peça Teatral",
+      "DataHora": "2024-10-15T19:30:00"
+    },
+    "Pessoa": {
+      "Nome": "Maria Oliveira",
+      "Cpf": "987.654.321-00"
+    }
+  },
+  {
+    "Show": {
+      "Nome": "Concertos de Jazz",
+      "DataHora": "2024-11-05T21:00:00"
+    },
+    "Pessoa": {
+      "Nome": "Pedro Santos",
+      "Cpf": "111.222.333-44"
+    }
+  }
+]

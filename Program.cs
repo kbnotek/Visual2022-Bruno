@@ -1,7 +1,7 @@
 ﻿using Curso_C_;
-using Curso_C_.ParadigmasOO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System;
 
+using System.Text.Json;
 
 //var example = new VarUsageExample();
 //example.DemonstrateVarUsage();
@@ -426,7 +426,7 @@ carro.ExibirInformacoes();
 // Explicando o conceito de composição
 carro.ExplicarComposicao();*/
 
-// Criando funcionários
+/*// Criando funcionários
 FuncionarioMulti funcionario1 = new FuncionarioMulti("Ana");
 FuncionarioMulti funcionario2 = new FuncionarioMulti("Carlos");
 
@@ -441,4 +441,597 @@ projeto.AdicionarFuncionario(funcionario2);
 projeto.ExibirInformacoes();
 
 // Explicando o conceito de multiplicidade
-projeto.ExplicarMultiplicidade();
+projeto.ExplicarMultiplicidade();*/
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Globalization;
+
+namespace SistemaGerenciamentoBilheteira
+{
+    class Program
+    {
+        static List<PessoaBilhete> pessoas = new List<PessoaBilhete>();
+        static List<Show> shows = new List<Show>();
+        static List<Ingresso> ingressos = new List<Ingresso>();
+
+        static void Main(string[] args)
+        {
+            string caminhoPessoas = @"C:\Visual2022-Bruno\pessoas.json"; // Altere para o caminho absoluto do seu arquivo pessoas.json
+            string caminhoShows = @"C:\Visual2022-Bruno\shows..json"; // Altere para o caminho absoluto do seu arquivo shows.json
+            string caminhoIngressos = @"C:\Visual2022-Bruno\ingressos.json"; // Altere para o caminho absoluto do seu arquivo ingressos.json
+
+            CarregarDados(caminhoPessoas, caminhoShows, caminhoIngressos);
+
+            int opcao = 0;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("==============================================");
+                Console.WriteLine("========== BRASÍLIA BILHETERIA DIGITAL =======");
+                Console.WriteLine("==============================================");
+                Console.WriteLine($"Programador: Bruno R Queiroz");
+                Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+                Console.WriteLine("==============================================\n");
+                Console.WriteLine("1. Gerenciar Clientes");
+                Console.WriteLine("2. Gerenciar Shows");
+                Console.WriteLine("3. Gerenciar Ingressos");
+                Console.WriteLine("0. Sair\n");
+                Console.WriteLine("==============================================\n");
+                Console.Write("Digite uma opção: ");
+
+                opcao = int.Parse(Console.ReadLine());
+
+                switch (opcao)
+                {
+                    case 1:
+                        MenuPessoas();
+                        break;
+                    case 2:
+                        MenuShows();
+                        break;
+                    case 3:
+                        MenuIngressos();
+                        break;
+                    case 0:
+                        SalvarDados(caminhoPessoas, caminhoShows, caminhoIngressos); // Salva dados antes de sair
+                        Console.WriteLine("\nSaindo do programa...");
+                        break;
+                    default:
+                        Console.WriteLine("\nOpção inválida, tente novamente.");
+                        break;
+                }
+            } while (opcao != 0);
+        }
+
+        static void MenuPessoas()
+        {
+            int opcao = 0;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("==============================================");
+                Console.WriteLine("=========== GERENCIAR CLIENTES ===============");
+                           Console.WriteLine($"========== {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)} ===============");
+                Console.WriteLine("==============================================\n");
+                Console.WriteLine("1. Cadastrar Cliente");
+                Console.WriteLine("2. Buscar Clientes");
+                Console.WriteLine("3. Atualizar Clientes");
+                Console.WriteLine("4. Remover Clientes");
+                Console.WriteLine("0. Voltar");
+                Console.WriteLine("==============================================");
+                Console.Write("Escolha uma opção: ");
+                opcao = int.Parse(Console.ReadLine());
+
+                switch (opcao)
+                {
+                    case 1:
+                        AdicionarPessoa();
+                        break;
+                    case 2:
+                        ListarPessoas();
+                        break;
+                    case 3:
+                        AtualizarPessoa();
+                        break;
+                    case 4:
+                        RemoverPessoa();
+                        break;
+                    case 0:
+                        Console.WriteLine("\nVoltando ao menu principal...");
+                        break;
+                    default:
+                        Console.WriteLine("\nOpção inválida, tente novamente.");
+                        break;
+                }
+                Console.WriteLine("\nPressione qualquer tecla para continuar...");
+                Console.ReadKey(); // Pausa para permitir que o usuário veja a mensagem antes de continuar
+            } while (opcao != 0);
+        }
+
+        static void MenuShows()
+        {
+            int opcao = 0;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("==============================================");
+                Console.WriteLine("========== GERENCIAR SHOWS ==============");
+                Console.WriteLine($"Programador: Bruno R Queiroz");
+                Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");               
+                Console.WriteLine("==============================================\n");
+                Console.WriteLine("1. Registrar Show");
+                Console.WriteLine("2. Verificar Shows");
+                Console.WriteLine("3. Atualizar Show");
+                Console.WriteLine("4. Cancelar Show");
+                Console.WriteLine("0. Voltar");
+                Console.WriteLine("==============================================");
+                Console.Write("Escolha uma opção: ");
+                opcao = int.Parse(Console.ReadLine());
+
+                switch (opcao)
+                {
+                    case 1:
+                        AdicionarShow();
+                        break;
+                    case 2:
+                        ListarShows();
+                        break;
+                    case 3:
+                        AtualizarShow();
+                        break;
+                    case 4:
+                        RemoverShow();
+                        break;
+                    case 0:
+                        Console.WriteLine("\nVoltando ao menu principal...");
+                        break;
+                    default:
+                        Console.WriteLine("\nOpção inválida, tente novamente.");
+                        break;
+                }
+                Console.WriteLine("\nPressione qualquer tecla para continuar...");
+                Console.ReadKey();
+            } while (opcao != 0);
+        }
+
+        static void MenuIngressos()
+        {
+            int opcao = 0;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("==============================================");
+                Console.WriteLine("========== GERENCIAR INGRESSOS ==============");
+                Console.WriteLine($"Programador: Bruno R Queiroz");
+                Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+                Console.WriteLine("==============================================\n");
+                Console.WriteLine("1. Emitir Ingresso");
+                Console.WriteLine("2. Ingressos Disponiveis");
+                Console.WriteLine("3. Atualizar Ingresso");
+                Console.WriteLine("4. Deletar Ingresso");
+                Console.WriteLine("0. Voltar");
+                Console.WriteLine("==============================================");
+                Console.Write("Escolha uma opção: ");
+                opcao = int.Parse(Console.ReadLine());
+
+                switch (opcao)
+                {
+                    case 1:
+                        AdicionarIngresso();
+                        break;
+                    case 2:
+                        ListarIngressos();
+                        break;
+                    case 3:
+                        AtualizarIngresso();
+                        break;
+                    case 4:
+                        RemoverIngresso();
+                        break;
+                    case 0:
+                        Console.WriteLine("\nVoltando ao menu principal...");
+                        break;
+                    default:
+                        Console.WriteLine("\nOpção inválida, tente novamente.");
+                        break;
+                }
+                Console.WriteLine("\nPressione qualquer tecla para continuar...");
+                Console.ReadKey();
+            } while (opcao != 0);
+        }
+
+        static void AdicionarPessoa()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== ADICIONAR NOVA PESSOA ============");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+            Console.Write("Digite o nome da pessoa: ");
+            string nome = Console.ReadLine();
+            Console.Write("Digite o CPF da pessoa: ");
+            string cpf = Console.ReadLine();
+
+            if (pessoas.Exists(p => p.Cpf.Equals(cpf)))
+            {
+                Console.WriteLine("\nPessoa já existente.");
+            }
+            else
+            {
+                pessoas.Add(new PessoaBilhete(nome, cpf));
+                Console.WriteLine("\nPessoa adicionada com sucesso!");
+            }
+        }
+
+        static void ListarPessoas()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== LISTA DE PESSOAS ================");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+
+            if (pessoas.Count == 0)
+            {
+                Console.WriteLine("\nNenhuma pessoa cadastrada.");
+            }
+            else
+            {
+                foreach (var pessoa in pessoas)
+                {
+                    Console.WriteLine($"{pessoa.Nome} - {pessoa.Cpf}");
+                    
+                }
+               
+            }
+        }
+
+        static void AtualizarPessoa()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== ATUALIZAR INFORMAÇÕES ============");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+            Console.WriteLine("Digite o CPF da pessoa a ser atualizada:");
+            ListarPessoas();
+
+            string cpfAtual = Console.ReadLine();
+            var pessoa = pessoas.Find(p => p.Cpf.Equals(cpfAtual));
+
+            if (pessoa != null)
+            {
+                Console.Write("Digite o novo nome da pessoa: ");
+                string novoNome = Console.ReadLine();
+
+                pessoa.Nome = novoNome;
+                Console.WriteLine("\nInformações da pessoa atualizadas com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("\n Por Favor Digite o CPF.");
+                Console.WriteLine("\n Pessoa não encontrada.");
+            }
+        }
+
+        static void RemoverPessoa()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== REMOVER PESSOA ===================");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+            Console.WriteLine("Digite o CPF da pessoa a ser removida:");
+            ListarPessoas();
+
+            string cpf = Console.ReadLine();
+            var pessoa = pessoas.Find(p => p.Cpf.Equals(cpf));
+
+            if (pessoa != null)
+            {
+                pessoas.Remove(pessoa);
+                Console.WriteLine("\nPessoa removida com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("\n Por Favor Digite o CPF para EXCLUIR.");
+                Console.WriteLine("\nPessoa não encontrada.");
+            }
+        }
+
+        static void AdicionarShow()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== ADICIONAR NOVO SHOW ==============");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+            Console.Write("Digite o nome do show: ");
+            string nome = Console.ReadLine();
+            Console.Write("Digite a data e hora do show (yyyy-MM-dd HH:mm): ");
+            DateTime dataHora = DateTime.Parse(Console.ReadLine());
+
+            shows.Add(new Show(nome, dataHora));
+            Console.WriteLine("\nShow adicionado com sucesso!");
+        }
+
+        static void ListarShows()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== LISTA DE SHOWS ===================");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+
+            if (shows.Count == 0)
+            {
+                Console.WriteLine("\nNenhum show cadastrado.");
+            }
+            else
+            {
+                foreach (var show in shows)
+                {
+                    Console.WriteLine($"{show.Nome} - {show.DataHora}");
+                }
+            }
+        }
+
+        static void AtualizarShow()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== ATUALIZAR SHOW ===================");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+            Console.WriteLine("Digite o nome do show a ser atualizado:");
+            ListarShows();
+
+            string nomeAtual = Console.ReadLine();
+            var show = shows.Find(s => s.Nome.Equals(nomeAtual, StringComparison.OrdinalIgnoreCase));
+
+            if (show != null)
+            {
+                Console.Write("Digite o novo nome do show: ");
+                string novoNome = Console.ReadLine();
+                Console.Write("Digite a nova data e hora do show (yyyy-MM-dd HH:mm): ");
+                show.DataHora = DateTime.Parse(Console.ReadLine());
+
+                show.Nome = novoNome;
+                Console.WriteLine("\nInformações do show atualizadas com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("\n Por Favor Digite o Nome do Show.");
+                Console.WriteLine("\nShow não encontrado.");
+            }
+        }
+
+        static void RemoverShow()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== REMOVER SHOW =====================");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+            Console.WriteLine("Digite o nome do show a ser removido:");
+            ListarShows();
+
+            string nome = Console.ReadLine();
+            var show = shows.Find(s => s.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
+
+            if (show != null)
+            {
+                shows.Remove(show);
+                Console.WriteLine("\nShow removido com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("\nPor Favor Digite o Nome do Show para CANCELAR. ");
+                Console.WriteLine("\nShow não encontrado.");
+            }
+        }
+
+        static void AdicionarIngresso()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== ADICIONAR NOVO INGRESSO ===========");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+            Console.WriteLine("Selecione o show para adicionar o ingresso:");
+            ListarShows();
+
+            int showIndice = int.Parse(Console.ReadLine()) - 1;
+            if (showIndice >= 0 && showIndice < shows.Count)
+            {
+                Console.Write("Digite o CPF da pessoa: ");
+                string cpf = Console.ReadLine();
+                var pessoa = pessoas.Find(p => p.Cpf.Equals(cpf));
+
+                if (pessoa != null)
+                {
+                    ingressos.Add(new Ingresso(shows[showIndice], pessoa));
+                    Console.WriteLine("\nIngresso adicionado com sucesso!");
+                }
+                else
+                {
+                    Console.WriteLine("\nPessoa não encontrada.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nNúmero de show inválido.");
+            }
+        }
+
+        static void ListarIngressos()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== LISTA DE INGRESSES ===============");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+
+            if (ingressos.Count == 0)
+            {
+                Console.WriteLine("\nNenhum ingresso registrado.");
+            }
+            else
+            {
+                foreach (var ingresso in ingressos)
+                {
+                    Console.WriteLine($"{ingresso.Show.Nome} - {ingresso.Show.DataHora}: {ingresso.Pessoa.Nome} ({ingresso.Pessoa.Cpf})");
+                }
+            }
+        }
+
+        static void AtualizarIngresso()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== ATUALIZAR INGRESSO ===============");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+            Console.WriteLine("Selecione o ingresso para atualizar:");
+            for (int i = 0; i < ingressos.Count; i++)
+            {
+                var ingresso = ingressos[i];
+                Console.WriteLine($"{i + 1}. {ingresso.Show.Nome} - {ingresso.Show.DataHora}: {ingresso.Pessoa.Nome} ({ingresso.Pessoa.Cpf})");
+            }
+
+            int indice = int.Parse(Console.ReadLine()) - 1;
+
+            if (indice >= 0 && indice < ingressos.Count)
+            {
+                Console.Write("Digite o novo CPF da pessoa: ");
+                string novoCpf = Console.ReadLine();
+                var pessoa = pessoas.Find(p => p.Cpf.Equals(novoCpf));
+
+                if (pessoa != null)
+                {
+                    ingressos[indice].Pessoa = pessoa;
+                    Console.WriteLine("\nIngresso atualizado com sucesso!");
+                }
+                else
+                {
+                    Console.WriteLine("\nPessoa não encontrada.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nNúmero de ingresso inválido.");
+            }
+        }
+
+        static void RemoverIngresso()
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================");
+            Console.WriteLine("========== REMOVER INGRESSO ================");
+            Console.WriteLine($"Programador: Bruno R Queiroz");
+            Console.WriteLine($"Seja Bem Vindo: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)}");
+            Console.WriteLine("==============================================\n");
+            Console.WriteLine("Selecione o ingresso a ser removido:");
+            for (int i = 0; i < ingressos.Count; i++)
+            {
+                var ingresso = ingressos[i];
+                Console.WriteLine($"{i + 1}. {ingresso.Show.Nome} - {ingresso.Show.DataHora}: {ingresso.Pessoa.Nome} ({ingresso.Pessoa.Cpf})");
+            }
+
+            int indice = int.Parse(Console.ReadLine()) - 1;
+
+            if (indice >= 0 && indice < ingressos.Count)
+            {
+                ingressos.RemoveAt(indice);
+                Console.WriteLine("\nIngresso removido com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("\nNúmero de ingresso inválido.");
+            }
+        }
+
+        static void CarregarDados(string caminhoPessoas, string caminhoShows, string caminhoIngressos)
+        {
+            if (File.Exists(caminhoPessoas))
+            {
+                string jsonPessoas = File.ReadAllText(caminhoPessoas);
+                pessoas = JsonSerializer.Deserialize<List<PessoaBilhete>>(jsonPessoas) ?? new List<PessoaBilhete>();
+            }
+
+            if (File.Exists(caminhoShows))
+            {
+                string jsonShows = File.ReadAllText(caminhoShows);
+                shows = JsonSerializer.Deserialize<List<Show>>(jsonShows) ?? new List<Show>();
+            }
+
+            if (File.Exists(caminhoIngressos))
+            {
+                string jsonIngressos = File.ReadAllText(caminhoIngressos);
+                ingressos = JsonSerializer.Deserialize<List<Ingresso>>(jsonIngressos) ?? new List<Ingresso>();
+            }
+        }
+
+        static void SalvarDados(string caminhoPessoas, string caminhoShows, string caminhoIngressos)
+        {
+            string jsonPessoas = JsonSerializer.Serialize(pessoas);
+            File.WriteAllText(caminhoPessoas, jsonPessoas);
+
+            string jsonShows = JsonSerializer.Serialize(shows);
+            File.WriteAllText(caminhoShows, jsonShows);
+
+            string jsonIngressos = JsonSerializer.Serialize(ingressos);
+            File.WriteAllText(caminhoIngressos, jsonIngressos);
+        }
+    }
+
+    public class PessoaBilhete
+    {
+        public string Nome { get; set; }
+        public string Cpf { get; set; }
+
+        public PessoaBilhete(string nome, string cpf)
+        {
+            Nome = nome;
+            Cpf = cpf;
+        }
+    }
+
+    public class Show
+    {
+        public string Nome { get; set; }
+        public DateTime DataHora { get; set; }
+
+        public Show(string nome, DateTime dataHora)
+        {
+            Nome = nome;
+            DataHora = dataHora;
+        }
+    }
+
+    public class Ingresso
+    {
+        public Show Show { get; set; }
+        public PessoaBilhete Pessoa { get; set; }
+
+        public Ingresso(Show show, PessoaBilhete pessoa)
+        {
+            Show = show;
+            Pessoa = pessoa;
+        }
+    }
+}

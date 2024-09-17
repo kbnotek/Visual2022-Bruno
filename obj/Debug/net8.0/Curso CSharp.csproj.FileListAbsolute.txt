@@ -57,3 +57,6 @@ C:\Visual2022-Bruno\obj\Debug\net8.0\refint\Curso CSharp.dll
 C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.pdb
 C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.genruntimeconfig.cache
 C:\Visual2022-Bruno\obj\Debug\net8.0\ref\Curso CSharp.dll
+C:\Visual2022-Bruno\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CSharp.csproj.AssemblyReference.cache
+C:\Visual2022-Bruno\obj\Debug\net8.0\Curso CS.C9F6DD56.Up2Date
